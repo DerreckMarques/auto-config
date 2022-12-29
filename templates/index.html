@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Configurar {% endblock %}</h1>
+    <form method="post">
+        <label for="title">Host</label>
+       
+        <input type="text" name="host"
+               placeholder="Hostname"
+               value="{{ request.form['host'] }}"></input>
+        <br>
+        <label for="title">login </label>
+       
+        <input type="text" name="user"
+               placeholder="Username"
+               value="{{ request.form['user'] }}"></input>
+
+        <label for="title"></label>
+        <input type="password" name="password"
+            placeholder="password"
+            value="{{ request.form['password'] }}"></input>
+
+        <br>
+        <button type="submit">Conectar</button>
+    </form>
+{% endblock %}
