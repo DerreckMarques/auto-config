@@ -3,6 +3,7 @@ import sys
 from getpass import getpass
 from jnpr.junos import Device
 from jnpr.junos.exception import ConnectError
+from jnpr.junos.utils.config import Config
 
 hostname = input("Device hostname: ")
 junos_username = input("Junos OS username: ")
@@ -18,5 +19,9 @@ except Exception as err:
     print (err)
     sys.exit(1)
 
-print (dev.facts)
+with Config(dev, mode='private') as cu:  
+        cu.load('set system services netconf traceoptions file test.log', format='set')
+        cu.pdiff()
+        cu.commit(confirm=10)
+#print (dev.facts)
 dev.close()

@@ -5,6 +5,7 @@ import sys
 from getpass import getpass
 from jnpr.junos import Device
 from jnpr.junos.exception import ConnectError
+from jnpr.junos.utils.config import Config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '12345'
@@ -44,6 +45,12 @@ def conectar(host, user, password):
         print (err)
         sys.exit(1)
 
+    with Config(dev, mode='private') as cu:  
+        cu.load('set system services netconf traceoptions file test.log', format='set')
+        mensagem = cu.pdiff()
+        cu.commit(cu.confirm(10))
+
     mensagem = dev.facts
     dev.close()
     return mensagem
+
