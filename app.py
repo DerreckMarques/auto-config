@@ -31,7 +31,9 @@ def index():
 
     return render_template('index.html')
 
-
+@app.route('/cadastrar', methods=('POST', 'GET'))
+def create():
+    return render_template('create.html')
 
 
 def conectar(host, user, password):
