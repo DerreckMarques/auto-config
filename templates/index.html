@@ -1,33 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Configurar {% endblock %}</h1>
-    <form method="post">
-
-        <div class="form-group">
-          <label for="title">Host</label>
-          <input class="form-control" type="text" name="host"
-            placeholder="Hostname"
-            value="{{ request.form['host'] }}"></input>
-        </div>
-
-        <div class="form-group">
-          <label for="title">login </label>
-          <input class="form-control" type="text" name="user"
-               placeholder="Username"
-               value="{{ request.form['user'] }}"></input>
-        </div>
-        
-        <div class="form-group">
-          <label for="title">Password</label>
-          <input class="form-control" type="password" name="password"
-            placeholder="password"
-            autocomplete="current-password"
-            value="{{ request.form['password'] }}"></input>
-        </div>
-    
-        <div class="form-group">
-          <button class="btn btn-primary" type="submit">Conectar</button>
-        </div>
-    </form>
+<h1>{% block title %} Hosts{% endblock %}</h1>
+    {% for post in posts %}
+    <a href="{{ url_for('edit', id=post['id']) }}">
+        <p style="display: inline;">{{ post['title'] }} | {{ post['content'] }}</p>
+    </a>
+    <a  href="{{ url_for('edit', id=post['id']) }}">
+        <span class="badge badge-warning">Edit</span>
+    </a>
+    <hr>
+    {% endfor %}
 {% endblock %}
