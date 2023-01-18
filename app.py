@@ -21,8 +21,8 @@ def index():
 
 
 #
-@app.route('/configurar', methods=('POST', 'GET'))
-def configurar():
+@app.route('/conf/<int:id>', methods=('GET', 'POST'))
+def configurar_id(id):
     if request.method == 'POST':
         host = request.form['host']
         user = request.form['user']
@@ -39,27 +39,30 @@ def configurar():
             flash('"{}"'.format(mensagem))
             #Configurar conexão
 
-
-    return render_template('configurar.html')
-
+    
+    post = get_post(id)
+    return render_template('configurar_id.html', post=post)
 
 #
-@app.route('/cadastrar', methods=('GET', 'POST'))
-def cadastrar():
+@app.route('/configurar', methods=('GET', 'POST'))
+def configurar():
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+        host = request.form['host']
+        user = request.form['user']
+        password = request.form['password']
 
-        if not title:
-            flash('Title is required!')
+        if not host:
+            flash('Host is required!')
+        elif not user:
+            flash('User is required!')
+        elif not password:
+            flash('password is required!')
         else:
-            conn = get_db_connection()
-            conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
-    return render_template('create.html')
+            mensagem = conectar(host, user, password)
+            flash('"{}"'.format(mensagem))
+            #Configurar conexão
+ 
+    return render_template('configurar.html')
 
 #
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
@@ -93,6 +96,25 @@ def delete(id):
     conn.close()
     flash('"{}" was successfully deleted!'.format(post['title']))
     return redirect(url_for('index'))
+
+#
+@app.route('/cadastrar', methods=('GET', 'POST'))
+def cadastrar():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        if not title:
+            flash('Title is required!')
+        else:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
+                         (title, content))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
+    return render_template('create.html')
+
 
 #
 def conectar(host, user, password):

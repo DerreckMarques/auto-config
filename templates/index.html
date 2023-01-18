@@ -7,7 +7,10 @@
         <p style="display: inline;">{{ post['title'] }} | {{ post['content'] }}</p>
     </a>
     <a  href="{{ url_for('edit', id=post['id']) }}">
-        <span class="badge badge-warning">Edit</span>
+        <span class="badge badge-warning">Editar</span>
+    </a>
+    <a  href="{{ url_for('configurar_id', id=post['id']) }}">
+        <span class="badge badge-secondary">Configurar</span>
     </a>
     <hr>
     {% endfor %}
