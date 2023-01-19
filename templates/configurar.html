@@ -26,8 +26,24 @@
             value="{{ request.form['password'] }}"></input>
         </div>
     
+        <!--
         <div class="form-group">
           <button class="btn btn-primary" type="submit">Conectar</button>
         </div>
+        -->
     </form>
+
+    
+  <h2>Scripts</h2>
+  <p>The <strong>input type="checkbox"</strong> defines a checkbox:</p>
+
+  <form action="/action_page.php">
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Boas práticas">
+    <label for="vehicle1"> Boas práticas</label><br>
+    <input type="checkbox" id="vehicle2" name="vehicle2" value="Firewall">
+    <label for="vehicle2"> Firewall</label><br>
+    <input type="checkbox" id="vehicle3" name="vehicle3" value="configurações Básicas">
+    <label for="vehicle3"> configurações Básicas</label><br><br>
+    <input class="btn btn-primary" type="submit" value="Configurar">
+  </form> 
 {% endblock %}

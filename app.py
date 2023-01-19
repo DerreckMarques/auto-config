@@ -65,7 +65,7 @@ def configurar():
     return render_template('configurar.html')
 
 #
-@app.route('/<int:id>/edit', methods=('GET', 'POST'))
+@app.route('/edit/<int:id>', methods=('GET', 'POST'))
 def edit(id):
     post = get_post(id)
 
