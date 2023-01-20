@@ -15,9 +15,9 @@ app.config['SECRET_KEY'] = '12345'
 @app.route('/')
 def index():
     conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM posts').fetchall()
+    hosts = conn.execute('SELECT * FROM hosts').fetchall()
     conn.close()
-    return render_template('index.html', posts=posts)
+    return render_template('index.html', hosts=hosts)
 
 
 #
@@ -62,7 +62,31 @@ def configurar():
             flash('"{}"'.format(mensagem))
             #Configurar conexão
  
-    return render_template('configurar.html')
+    conn = get_db_connection()
+    scripts = conn.execute('SELECT * FROM scripts').fetchall()
+    conn.close()
+    return render_template('configurar.html', scripts=scripts)
+
+#
+@app.route('/atualizar', methods=('GET', 'POST'))
+def atualizar():
+    if request.method == 'POST':
+        host = request.form['host']
+        user = request.form['user']
+        password = request.form['password']
+
+        if not host:
+            flash('Host is required!')
+        elif not user:
+            flash('User is required!')
+        elif not password:
+            flash('password is required!')
+        else:
+            mensagem = conectar(host, user, password)
+            flash('"{}"'.format(mensagem))
+            #Configurar conexão
+ 
+    return render_template('atualizar.html')
 
 #
 @app.route('/edit/<int:id>', methods=('GET', 'POST'))
@@ -139,7 +163,7 @@ def conectar(host, user, password):
 
 #
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('ext/db/database.db')
     conn.row_factory = sqlite3.Row
     return conn
 

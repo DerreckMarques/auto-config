@@ -46,4 +46,10 @@
     <label for="vehicle3"> configurações Básicas</label><br><br>
     <input class="btn btn-primary" type="submit" value="Configurar">
   </form> 
+
+  {% for script in scripts %}
+    <h3> {{ script['title'] }}</h3>
+    <p> {{ script['content'] }}</p>
+    <hr>
+    {% endfor %}
 {% endblock %}

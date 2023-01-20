@@ -2,14 +2,14 @@
 
 {% block content %}
 <h1>{% block title %} Hosts{% endblock %}</h1>
-    {% for post in posts %}
-    <a href="{{ url_for('edit', id=post['id']) }}">
-        <p style="display: inline;">{{ post['title'] }} | {{ post['content'] }}</p>
+    {% for host in hosts %}
+    <a href="{{ url_for('edit', id=host['id']) }}">
+        <p style="display: inline;">{{ host['hostname'] }} | {{ host['ip'] }}</p>
     </a>
-    <a  href="{{ url_for('edit', id=post['id']) }}">
+    <a  href="{{ url_for('edit', id=host['id']) }}">
         <span class="badge badge-warning">Editar</span>
     </a>
-    <a  href="{{ url_for('configurar_id', id=post['id']) }}">
+    <a  href="{{ url_for('configurar_id', id=host['id']) }}">
         <span class="badge badge-secondary">Configurar</span>
     </a>
     <hr>
